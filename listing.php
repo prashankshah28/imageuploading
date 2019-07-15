@@ -43,13 +43,11 @@
     <div class="col-md-6 float-right">
       <a href="index.php"  class="btn btn-primary float-right">Click here For add Image </a>
     </div>
-    <form>
     <div class="col-md-6">
       <input type="text" name="search" id="search"/>
       <input type="submit" value="Search" class="btn-primary" onclick='search_name()' />
-      <input type="reset" value="Reset" />
+      <input type="reset" value="Reset" onclick="reset()" />
     </div>
-  </form>
 
   </div>
 
@@ -65,6 +63,9 @@
 </html>
 <script>
 
+function reset(){
+   document.getElementById("search").value = "";
+}
 //Delete Function For Delete Image
 function delete_img(id)
 {
