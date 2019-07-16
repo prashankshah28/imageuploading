@@ -18,6 +18,10 @@
 
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
   <!-- jQuery UI library -->
 
 
@@ -32,8 +36,23 @@
   <script type="text/javascript" src="js/notify.min.js"></script>
   <script type="text/javascript" src="js/notify.js"></script>
 
+  <!--  -->
+  
+
 </head>
 <body>
+<?php
+if (isset($_GET["pageno"])) {
+  $pn  = $_GET["pageno"];
+  echo "<input type='hidden' id='pageno' name='pageno' value='$pn'>"
+?>
+<?php
+}  
+else {
+  $pn = 1;
+  echo "<input type='hidden' id='pageno' name='pageno' value='$pn'>";
+}
+?>
 
   <br>
   <div class="col-md-12">
@@ -49,16 +68,12 @@
       <input type="reset" value="Reset" onclick="reset()" />
     </div>
 
+    
   </div>
-
   <br>
-
-  <div class="container">
-   <div class="table-responsive">
-    <table class="table table-striped table-bordered" id="imageData">
-    </table>
+  <div class="container" id = "imageData">
+  
   </div>
-</div>
 </body>
 </html>
 <script>
@@ -67,8 +82,7 @@ function reset(){
    document.getElementById("search").value = "";
 }
 //Delete Function For Delete Image
-function delete_img(id)
-{
+function delete_img(id){
 //    alert("hey");
 var image_id = id;
     //alert(image_id);
@@ -77,8 +91,7 @@ var image_id = id;
     }
   }
 //call by delete_img
-function delete_image(image_id)
-{
+function delete_image(image_id){
 
   $.ajax({
     url: 'delete.php',
@@ -88,32 +101,29 @@ function delete_image(image_id)
       image_id:image_id,
     },
     success:function(response) {
-     if(response=="Delete Successfully")
-     {
+    if(response=="Delete Successfully"){
 //        $.notify("Hello World");
-
-load_image_list();
-$.notify("Delete Successfully", "success");
-        //window.location = "listing.php";
-//    document.location.reload();   
+        $.notify("Delete Successfully", "success");
+        load_image_list();
+        
+                //window.location = "listing.php";
+        //    document.location.reload();
+      }
+    }
+  });
 }
-}
-});
-}
-function load_image_list()
-{
+function load_image_list(){
   var action = "fetch";
+  var pageno = document.getElementById("pageno").value;
   $.ajax({
-   url:"displayImages.php",
-   method:"POST",
-   data:{action:action},
-   success:function(data)
-   {
+  url:"displayImages.php",
+  method:"POST",
+  data:{action:action, pageno:pageno},
+  success:function(data){
     $('#imageData').html(data);
-  }
-});
+    }
+  });
 };
-
 </script>
 <script>
   function search_name(){
@@ -124,23 +134,19 @@ function load_image_list()
       url:"search.php",
       method:"POST",
       data:{action:action,search_name:search_name},
-      success:function(data)
-      {
+      success:function(data){
 //    alert(data);
-$('#imageData').html(data);
-}
-});
-  };
-  load_image_list();
+        $('#imageData').html(data);
+      }
+  });
+};
 
+load_image_list();
 </script>
-
-
 <script>
   $(function() {
     $("#search").autocomplete({
       source: "searchimage.php",
     });
-  });
-
+});
 </script>

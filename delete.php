@@ -11,9 +11,7 @@ if(isset($_POST['delete_image']))
     $image_name = "images/" . $image_path['image_path'];
     //Delete File From Directory
     unlink($image_name);
-    
     mysqli_query($conn,$query);
- }
-
-
+    echo "Delete Successfully";
+}
 ?>
