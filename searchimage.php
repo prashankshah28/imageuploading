@@ -1,4 +1,5 @@
 <?php
+//used for autocomplete text 
 include 'connection.php';
 // Get search term
 $searchTerm = $_GET['term']; 

@@ -6,39 +6,30 @@
 
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-
-  <!-- jQuery library -->
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <!-- Popper JS -->
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <!-- Latest compiled JavaScript -->
 
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-  <!-- jQuery UI library -->
-
-
-  <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
   <!-- jQuery UI library -->
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  
+  <!-- jQuery Autocomplete -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
   <!-- js notify  -->
   <script type="text/javascript" src="js/notify.min.js"></script>
   <script type="text/javascript" src="js/notify.js"></script>
-
-  <!--  -->
-  
-
+  <style>
+    .search{
+      background-color: blue;
+    }
+  </style>
 </head>
 <body>
 <?php
@@ -59,20 +50,33 @@ else {
     <h2 class="text-center">All Uploaded Images</h2>
   </div>
   <div class="container">
-    <div class="col-md-6 float-right">
+    <div class="form-group">  
+      <div class="col-md-6 float-right">
       <a href="index.php"  class="btn btn-primary float-right">Click here For add Image </a>
-    </div>
-    <div class="col-md-6">
+      </div>
+      <div class="col-md-6">
       <input type="text" name="search" id="search"/>
       <input type="submit" value="Search" class="btn-primary" onclick='search_name()' />
       <input type="reset" value="Reset" onclick="reset()" />
-    </div>
-
-    
+      </div>
   </div>
+</div>
   <br>
+<div class="container">
+  <div class="form-group">
+    <div class="col-md-9">
+    </div>
+    <div class="col-md-3">
+      <select class="form-control" id="sortorder" onchange="load_image_list()">
+        <option>A-Z</option>
+        <option>Z-A</option>
+     </select>
+    </div>
+    </div>
+</div>
+    <br>
   <div class="container" id = "imageData">
-  
+   
   </div>
 </body>
 </html>
@@ -113,12 +117,13 @@ function delete_image(image_id){
   });
 }
 function load_image_list(){
+  var sortorder = document.getElementById("sortorder").value;
   var action = "fetch";
   var pageno = document.getElementById("pageno").value;
   $.ajax({
   url:"displayImages.php",
   method:"POST",
-  data:{action:action, pageno:pageno},
+  data:{action:action, pageno:pageno, sortorder:sortorder},
   success:function(data){
     $('#imageData').html(data);
     }
@@ -140,13 +145,22 @@ function load_image_list(){
       }
   });
 };
-
 load_image_list();
 </script>
 <script>
   $(function() {
     $("#search").autocomplete({
-      source: "searchimage.php",
+      classes : {
+        "ui-autocomplete" : "search"
+      },
+      source: "searchimage.php"
+     
     });
 });
 </script>
+<script>
+  $("#myHref").on('click', function() {
+   alert("hey") 
+});
+
+<script>

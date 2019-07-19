@@ -1,9 +1,11 @@
+<table class="table table-striped table-bordered" id="imageData1">
 <?php
+//wehn click on search at that time working
  if($_POST["action"] == "search" ){
    ?>
    <thead>
          <tr>
-            <th>Title</th>
+            <th><i class="arrow up"><i class="arrow down">Title</th>
             <th>Image</th>
             <th>Option</th>
          </tr>
@@ -25,4 +27,4 @@
      
                      ?>
                </tbody>
-
+</table>

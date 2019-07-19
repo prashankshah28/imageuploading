@@ -5,7 +5,7 @@ if (isset($_POST["action"])) {
         ?>
    <thead>
          <tr>
-            <th>Title</th>
+            <th><i class="arrow up"><i class="arrow down">Title</th>
             <th>Image</th>
             <th>Option</th>
          </tr>
@@ -19,13 +19,19 @@ if (isset($_POST["action"])) {
         } else {
             $pn = 1;
         }
-        $limit = 3;
+        $limit = 2;
         $start_from = ($pn - 1) * $limit;
         $total_pages_sql = "SELECT COUNT(*) FROM imagedata";
         $result_count = mysqli_query($conn, $total_pages_sql);
         $total_rows = mysqli_fetch_array($result_count)[0];
         $total_pages = ceil($total_rows / $limit);
-        $fetchData = "SELECT * FROM imagedata LIMIT $start_from, $limit";
+        $sortorder = $_POST["sortorder"];
+        if($sortorder == "A-Z"){
+            $fetchData = "SELECT * FROM imagedata ORDER BY name ASC LIMIT $start_from, $limit ";
+        }
+        else{
+            $fetchData = "SELECT * FROM imagedata  ORDER BY name DESC LIMIT $start_from, $limit";
+        }
         $result = mysqli_query($conn, $fetchData);
         while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>" . "<td>" . $row['name'] . "</td>";
